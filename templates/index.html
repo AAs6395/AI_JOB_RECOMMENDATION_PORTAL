@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CareerAI — Dashboard</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+
+<!-- AUTH SCREEN -->
+<div id="authScreen" class="auth-screen">
+  <div class="auth-bg">
+    <div class="orb orb1"></div><div class="orb orb2"></div><div class="orb orb3"></div>
+  </div>
+  <div class="auth-container">
+    <a href="/" class="auth-back">← Back to Home</a>
+    <div class="auth-brand">
+      <div class="brand-icon">⚡</div>
+      <h1>CareerAI</h1>
+      <p>Sign in or create your account</p>
+    </div>
+    <div class="auth-tabs">
+      <button class="tab-btn active" onclick="showTab('login')">Login</button>
+      <button class="tab-btn" onclick="showTab('userReg')">Job Seeker Register</button>
+      <button class="tab-btn" onclick="showTab('companyReg')">Company Register</button>
+      <button class="tab-btn" onclick="showTab('admin')">Admin / HR Login</button>
+    </div>
+
+    <!-- Login Tab -->
+    <div id="loginTab" class="auth-form">
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="loginEmail" placeholder="you@email.com">
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="loginPw" placeholder="••••••••">
+      </div>
+      <button class="btn-primary" onclick="login()">Sign In →</button>
+      <p class="auth-hint">Demo: test@test.com / test123</p>
+    </div>
+
+    <!-- Job Seeker Register Tab -->
+    <div id="userRegTab" class="auth-form hidden">
+      <div class="reg-banner user-banner">👤 Register as Job Seeker</div>
+      <div class="input-group">
+        <label>Full Name</label>
+        <input type="text" id="uRegName" placeholder="John Doe">
+      </div>
+      <div class="input-group">
+        <label>Email</label>
+        <input type="email" id="uRegEmail" placeholder="you@email.com">
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="uRegPw" placeholder="Min 6 characters">
+      </div>
+      <button class="btn-primary" onclick="registerUser()">Create Job Seeker Account →</button>
+      <p class="auth-hint">Free forever. Find AI-matched jobs instantly.</p>
+    </div>
+
+    <!-- Company Register Tab -->
+    <div id="companyRegTab" class="auth-form hidden">
+      <div class="reg-banner company-banner">🏢 Register Your Company / HR Account</div>
+      <div class="form-2col">
+        <div class="input-group">
+          <label>Your Name</label>
+          <input type="text" id="cRegName" placeholder="HR Manager Name">
+        </div>
+        <div class="input-group">
+          <label>Work Email *</label>
+          <input type="email" id="cRegEmail" placeholder="hr@company.com">
+        </div>
+        <div class="input-group">
+          <label>Company Name *</label>
+          <input type="text" id="cRegCompany" placeholder="TechCorp India">
+        </div>
+        <div class="input-group">
+          <label>Industry</label>
+          <input type="text" id="cRegIndustry" placeholder="Technology / Finance / etc.">
+        </div>
+        <div class="input-group">
+          <label>Website</label>
+          <input type="text" id="cRegWebsite" placeholder="https://company.com">
+        </div>
+        <div class="input-group">
+          <label>Password *</label>
+          <input type="password" id="cRegPw" placeholder="Min 6 characters">
+        </div>
+      </div>
+      <div class="input-group">
+        <label>Company Description</label>
+        <textarea id="cRegDesc" placeholder="Brief description of your company..." style="min-height:70px;resize:vertical"></textarea>
+      </div>
+      <button class="btn-primary" onclick="registerCompany()">Register Company →</button>
+      <p class="auth-hint">Post jobs, review applicants, and hire the best talent.</p>
+    </div>
+
+    <!-- Admin / HR Login Tab -->
+    <div id="adminTab" class="auth-form hidden">
+      <div class="reg-banner admin-banner">🔐 Admin / HR Login</div>
+      <div class="input-group">
+        <label>Username or Email</label>
+        <input type="text" id="adminUser" placeholder="admin  or  hr@company.com">
+      </div>
+      <div class="input-group">
+        <label>Password</label>
+        <input type="password" id="adminPw" placeholder="••••••••">
+      </div>
+      <button class="btn-primary" onclick="adminLogin()">Access Dashboard →</button>
+      <p class="auth-hint">Admin: admin / admin123 &nbsp;·&nbsp; HR: hr@techcorp.com / hr123</p>
+    </div>
+
+    <div id="authMsg" class="auth-msg hidden"></div>
+  </div>
+</div>
+
+<!-- MAIN APP -->
+<div id="mainApp" class="hidden">
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-brand">
+      <span class="brand-icon-sm">⚡</span>
+      <span>CareerAI</span>
+    </div>
+    <nav class="nav-links" id="navLinks"></nav>
+    <div class="sidebar-user" id="sidebarUser"></div>
+  </aside>
+  <main class="main-content">
+    <div class="topbar">
+      <button class="menu-btn" onclick="toggleSidebar()">☰</button>
+      <div id="pageTitle" class="page-title">Dashboard</div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <div id="notifBellSlot"></div>
+        <div id="msgBellSlot"></div>
+        <button class="logout-btn" onclick="logout()">Sign Out</button>
+      </div>
+    </div>
+    <div class="content-area" id="contentArea"></div>
+  </main>
+</div>
+
+<script src="/static/js/auth.js"></script>
+<script src="/static/js/user.js"></script>
+<script src="/static/js/jobs.js"></script>
+<script src="/static/js/admin.js"></script>
+<script>
+if (window.location.hash === '#company-register') showTab('companyReg');
+</script>
+</body>
+</html>
